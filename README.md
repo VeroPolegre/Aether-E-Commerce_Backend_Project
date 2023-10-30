@@ -1,6 +1,6 @@
-<h1 align="center"><samp> E-Commerce</samp></h1>
+<h1 align="center"><samp>E-Commerce</samp></h1>
 
-<h2 align="center"><samp>BACKEND PROJECT</samp></h2>
+<h2 align="center"><samp>Vapor: A Backend Project</samp></h2>
   <p align="center"><samp>
     Backend project made with Node.js && Express.js technologies using MySQL && Sequelize.
     <br /> 
