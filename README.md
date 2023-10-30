@@ -47,10 +47,10 @@
 ```bash
 
  # Clone the repository
- $ git clone https://github.com/VeroPolegre/Vapor-E-Commerce_Backend_Project
+ $ git clone https://github.com/VeroPolegre/Aether-E-Commerce_Backend_Project
  
  # Enter the directory
- $ cd E-Commerce_Backend-Project
+ $ cd Aether-E-Commerce_Backend_Project
 
  # Install the dependencies
  $ npm install
