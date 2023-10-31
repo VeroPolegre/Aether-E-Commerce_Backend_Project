@@ -8,9 +8,7 @@
     <a href="https://github.com/victorcodigos/1-proyecto-e-commerce-backend/issues">Request Feature</a>
     ⭐
     <br />
-    ⚠️
-    <a href="https://github.com/VeroPolegre/E-Commerce_Backend-Project/issues">Report Bug</a>
-    ⚠️
+    
   </samp></p>
   
 # <h2><samp> ⚡ Objectives  </samp></h2>
