@@ -68,6 +68,7 @@ const UserController = {
         });
       });
   },
+
   async update(req, res) {
     await User.update(req.body, {
       where: {
@@ -75,6 +76,20 @@ const UserController = {
       },
     });
     res.send(`User updated succesfully!`);
+  },
+
+  async delete(req, res) {
+    await User.destroy({
+      where: {
+        id: req.params.id,
+      },
+    });
+    await Post.destroy({
+      where: {
+        UserId: req.params.id,
+      },
+    });
+    res.send("User deleted succesfully!");
   },
 
   login(req, res) {
