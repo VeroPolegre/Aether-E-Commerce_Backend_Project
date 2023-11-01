@@ -1,4 +1,4 @@
-const { User, Token } = require("../models/index.js");
+const { User, Order, Token } = require("../models/index.js");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { jwt_secret } = require("../config/config.json")["development"];
@@ -58,7 +58,7 @@ const UserController = {
 
   getAll(req, res) {
     User.findAll({
-      include: [],
+      include: [Order],
     })
       .then((users) => res.send(users))
       .catch((err) => {
