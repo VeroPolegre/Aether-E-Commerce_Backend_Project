@@ -110,6 +110,23 @@ const UserController = {
       res.send({ message: "Welcome " + user.name, user, token });
     });
   },
+
+  async logout(req, res) {
+    try {
+      await Token.destroy({
+        where: {
+          [Op.and]: [
+            { userId: req.user.id },
+            { token: req.headers.authorization },
+          ],
+        },
+      });
+      res.send({ message: "Logged out succesfully!" });
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({ message: "There has been a problem logging out" });
+    }
+  },
 };
 
 module.exports = UserController;

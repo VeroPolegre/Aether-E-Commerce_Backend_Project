@@ -20,5 +20,5 @@ router.get("/", authentication, UserController.getAll);
 router.put("/:id", authentication, UserController.update);
 router.delete("/:id", authentication, isAdmin, UserController.delete);
 router.post("/login", UserController.login);
-//router.delete("/logout", authentication, UserController.logout);
+router.delete("/logout", authentication, UserController.logout);
 module.exports = router;
