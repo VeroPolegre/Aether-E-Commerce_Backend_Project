@@ -56,6 +56,19 @@ const UserController = {
       .catch((err) => console.error(err));
   },
 
+  getAll(req, res) {
+    User.findAll({
+      include: [],
+    })
+      .then((users) => res.send(users))
+      .catch((err) => {
+        console.log(err);
+        res.status(500).send({
+          message: "Problem getting all users",
+        });
+      });
+  },
+
   login(req, res) {
     User.findOne({
       where: {

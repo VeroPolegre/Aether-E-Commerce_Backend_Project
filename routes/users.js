@@ -16,7 +16,7 @@ router.put(
   isAdmin,
   UserController.changeRoleToUser
 );
-// router.get('/',authentication, UserController.getAll)
+router.get("/", authentication, UserController.getAll);
 // router.delete("/id/:id", authentication, isAdmin, UserController.delete);
 // router.put('/:id', authentication, UserController.update)
 router.post("/login", UserController.login);
