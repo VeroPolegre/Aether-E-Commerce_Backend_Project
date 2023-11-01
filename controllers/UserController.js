@@ -25,12 +25,10 @@ const UserController = {
         user
           .update({ role: "admin" })
           .then((updatedUser) => {
-            res
-              .status(200)
-              .send({
-                msg: `Updated ${user.name}'s role to admin`,
-                updatedUser,
-              });
+            res.status(200).send({
+              msg: `Updated ${user.name}'s role to admin`,
+              updatedUser,
+            });
           })
           .catch((err) => console.error(err));
       })
@@ -48,12 +46,10 @@ const UserController = {
         user
           .update({ role: "user" })
           .then((updatedUser) => {
-            res
-              .status(200)
-              .send({
-                msg: `Updated ${user.name}'s role to user`,
-                updatedUser,
-              });
+            res.status(200).send({
+              msg: `Updated ${user.name}'s role to user`,
+              updatedUser,
+            });
           })
           .catch((err) => console.error(err));
       })
@@ -74,7 +70,7 @@ const UserController = {
         return res.status(400).send({ message: "Incorrect user or password" });
       }
       const token = jwt.sign({ id: user.id }, jwt_secret);
-      Token.create({ token, UserId: user.id });
+      Token.create({ token, userId: user.id });
       res.send({ message: "Welcome " + user.name, user, token });
     });
   },
