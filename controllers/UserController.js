@@ -13,6 +13,7 @@ const UserController = {
       )
       .catch((err) => console.error(err));
   },
+
   login(req, res) {
     User.findOne({
       where: {

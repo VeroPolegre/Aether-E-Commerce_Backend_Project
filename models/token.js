@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
   Token.init(
     {
       token: DataTypes.STRING,
-      UserId: DataTypes.UUID,
+      userId: DataTypes.UUID,
     },
     {
       sequelize,
