@@ -7,4 +7,5 @@ router.post("/", UserController.create);
 router.post("/login", UserController.login);
 // router.post("/changeRole", authentication, isAdmin, UserController.changeRole);
 router.put("/:userId/changeRoleToAdmin", UserController.changeRoleToAdmin);
+router.put("/:userId/changeRoleToUser", UserController.changeRoleToUser);
 module.exports = router;

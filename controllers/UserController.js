@@ -27,7 +27,33 @@ const UserController = {
           .then((updatedUser) => {
             res
               .status(200)
-              .send({ msg: `Updated ${user.name}'s role`, updatedUser });
+              .send({
+                msg: `Updated ${user.name}'s role to admin`,
+                updatedUser,
+              });
+          })
+          .catch((err) => console.error(err));
+      })
+      .catch((err) => console.error(err));
+  },
+
+  changeRoleToUser(req, res) {
+    const { userId } = req.params;
+    User.findByPk(userId)
+      .then((user) => {
+        if (!user) {
+          return res.status(404).send({ message: "User not found" });
+        }
+
+        user
+          .update({ role: "user" })
+          .then((updatedUser) => {
+            res
+              .status(200)
+              .send({
+                msg: `Updated ${user.name}'s role to user`,
+                updatedUser,
+              });
           })
           .catch((err) => console.error(err));
       })
