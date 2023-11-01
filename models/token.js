@@ -1,5 +1,5 @@
 "use strict";
-const uuid = require("uuid");
+
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Token extends Model {
@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
+
   Token.init(
     {
       token: DataTypes.STRING,
@@ -17,8 +18,6 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "Token",
     }
   );
-  Token.beforeCreate((token, _) => {
-    return (token.id = uuid());
-  });
+
   return Token;
 };
