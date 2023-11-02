@@ -1,18 +1,26 @@
-const { User, Order, Token } = require("../models/index.js");
+const { User, Order, Token, Sequelize } = require("../models/index.js");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { jwt_secret } = require("../config/config.json")["development"];
+const { Op } = Sequelize;
 
 const UserController = {
   create(req, res) {
+    const requiredFields = ["name", "email", "password"];
+    const missingFields = requiredFields.filter((field) => !req.body[field]);
+    if (missingFields.length > 0) {
+      return res.status(400).send({
+        message: `Missing required fields: ${missingFields.join(", ")}`,
+      });
+    }
     req.body.role = "user";
     const password = bcrypt.hashSync(req.body.password, 10);
     User.create({ ...req.body, password })
       .then((user) =>
-        res.status(201).send({ message: "User created succesfully!", user })
+        res.status(201).send({ message: "User created successfully!", user })
       )
       .catch((err) => {
-        console.error("Error creating user:", error);
+        console.error("Error creating user:", err);
         res.status(500).send("An error occurred while creating the user.");
       });
   },
@@ -47,23 +55,6 @@ const UserController = {
           message: "Problem getting all users",
         });
       });
-  },
-
-  async logout(req, res) {
-    try {
-      await Token.destroy({
-        where: {
-          [Op.and]: [
-            { UserId: req.user.id },
-            { token: req.headers.authorization },
-          ],
-        },
-      });
-      res.send({ message: "Logged out succesfully!" });
-    } catch (error) {
-      console.log(error);
-      res.status(500).send({ message: "There has been a problem logging out" });
-    }
   },
 
   changeRoleToAdmin(req, res) {
@@ -150,6 +141,23 @@ const UserController = {
       },
     });
     res.send(`User deleted succesfully!`);
+  },
+
+  async logout(req, res) {
+    try {
+      await Token.destroy({
+        where: {
+          [Op.and]: [
+            { UserId: req.user.id },
+            { token: req.headers.authorization },
+          ],
+        },
+      });
+      res.send({ message: "Logged out succesfully!" });
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({ message: "There has been a problem logging out" });
+    }
   },
 };
 

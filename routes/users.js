@@ -4,6 +4,8 @@ const { authentication, isAdmin } = require("../middleware/authentication");
 const UserController = require("../controllers/UserController");
 
 router.post("/", UserController.create);
+router.post("/login", UserController.login);
+router.get("/", authentication, UserController.getAll);
 router.put(
   "/:UserId/changeRoleToAdmin",
   authentication,
@@ -16,9 +18,7 @@ router.put(
   isAdmin,
   UserController.changeRoleToUser
 );
-router.get("/", authentication, UserController.getAll);
 router.put("/:id", authentication, UserController.update);
-router.delete("/:id", authentication, isAdmin, UserController.delete);
-router.post("/login", UserController.login);
 router.delete("/logout", authentication, UserController.logout);
+router.delete("/:id", authentication, isAdmin, UserController.delete);
 module.exports = router;
