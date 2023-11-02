@@ -4,6 +4,9 @@ module.exports = (sequelize, DataTypes) => {
   class Game extends Model {
     static associate(models) {
       Game.belongsTo(models.Library);
+      Game.belongsToMany(models.Category, {
+        through: models.GameCategory,
+      });
     }
   }
   Game.init(
