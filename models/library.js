@@ -1,12 +1,12 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class Order extends Model {
+  class Library extends Model {
     static associate(models) {
       // define association here
     }
   }
-  Order.init(
+  Library.init(
     {
       id: {
         allowNull: false,
@@ -14,14 +14,13 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
       },
-      date: DataTypes.DATE,
-      total: DataTypes.DECIMAL,
       UserId: DataTypes.UUID,
+      GameId: DataTypes.UUID,
     },
     {
       sequelize,
-      modelName: "Order",
+      modelName: "Library",
     }
   );
-  return Order;
+  return Library;
 };

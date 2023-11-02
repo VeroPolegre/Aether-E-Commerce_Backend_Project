@@ -10,7 +10,7 @@ module.exports = {
         defaultValue: Sequelize.UUIDV4,
       },
       token: Sequelize.STRING,
-      userId: Sequelize.UUID,
+      UserId: Sequelize.UUID,
 
       createdAt: {
         allowNull: false,

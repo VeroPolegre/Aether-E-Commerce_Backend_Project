@@ -5,13 +5,13 @@ const UserController = require("../controllers/UserController");
 
 router.post("/", UserController.create);
 router.put(
-  "/:userId/changeRoleToAdmin",
+  "/:UserId/changeRoleToAdmin",
   authentication,
   isAdmin,
   UserController.changeRoleToAdmin
 );
 router.put(
-  "/:userId/changeRoleToUser",
+  "/:UserId/changeRoleToUser",
   authentication,
   isAdmin,
   UserController.changeRoleToUser

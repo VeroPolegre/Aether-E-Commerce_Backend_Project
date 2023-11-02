@@ -15,8 +15,8 @@ const UserController = {
   },
 
   changeRoleToAdmin(req, res) {
-    const { userId } = req.params;
-    User.findByPk(userId)
+    const { UserId } = req.params;
+    User.findByPk(UserId)
       .then((user) => {
         if (!user) {
           return res.status(404).send({ message: "User not found" });
@@ -36,8 +36,8 @@ const UserController = {
   },
 
   changeRoleToUser(req, res) {
-    const { userId } = req.params;
-    User.findByPk(userId)
+    const { UserId } = req.params;
+    User.findByPk(UserId)
       .then((user) => {
         if (!user) {
           return res.status(404).send({ message: "User not found" });
@@ -106,7 +106,7 @@ const UserController = {
         return res.status(400).send({ message: "Incorrect user or password" });
       }
       const token = jwt.sign({ id: user.id }, jwt_secret);
-      Token.create({ token, userId: user.id });
+      Token.create({ token, UserId: user.id });
       res.send({ message: "Welcome " + user.name, user, token });
     });
   },
@@ -116,7 +116,7 @@ const UserController = {
       await Token.destroy({
         where: {
           [Op.and]: [
-            { userId: req.user.id },
+            { UserId: req.user.id },
             { token: req.headers.authorization },
           ],
         },
