@@ -3,8 +3,8 @@ const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Library extends Model {
     static associate(models) {
-      Library.BelongsTo(models.User);
-      Library.HasMany(models.Game);
+      Library.belongsTo(models.User);
+      Library.hasMany(models.Game);
     }
   }
   Library.init(
