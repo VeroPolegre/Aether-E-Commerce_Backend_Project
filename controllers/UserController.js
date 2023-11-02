@@ -14,6 +14,55 @@ const UserController = {
       .catch((err) => console.error(err));
   },
 
+  login(req, res) {
+    User.findOne({
+      where: {
+        email: req.body.email,
+      },
+    }).then((user) => {
+      if (!user) {
+        return res.status(400).send({ message: "Incorrect user or password" });
+      }
+      const isMatch = bcrypt.compareSync(req.body.password, user.password);
+      if (!isMatch) {
+        return res.status(400).send({ message: "Incorrect user or password" });
+      }
+      const token = jwt.sign({ id: user.id }, jwt_secret);
+      Token.create({ token, UserId: user.id });
+      res.send({ message: "Welcome " + user.name + "!", user, token });
+    });
+  },
+
+  getAll(req, res) {
+    User.findAll({
+      include: [Order],
+    })
+      .then((users) => res.send(users))
+      .catch((err) => {
+        console.log(err);
+        res.status(500).send({
+          message: "Problem getting all users",
+        });
+      });
+  },
+
+  async logout(req, res) {
+    try {
+      await Token.destroy({
+        where: {
+          [Op.and]: [
+            { UserId: req.user.id },
+            { token: req.headers.authorization },
+          ],
+        },
+      });
+      res.send({ message: "Logged out succesfully!" });
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({ message: "There has been a problem logging out" });
+    }
+  },
+
   changeRoleToAdmin(req, res) {
     const { UserId } = req.params;
     User.findByPk(UserId)
@@ -56,26 +105,13 @@ const UserController = {
       .catch((err) => console.error(err));
   },
 
-  getAll(req, res) {
-    User.findAll({
-      include: [Order],
-    })
-      .then((users) => res.send(users))
-      .catch((err) => {
-        console.log(err);
-        res.status(500).send({
-          message: "Problem getting all users",
-        });
-      });
-  },
-
   async update(req, res) {
     await User.update(req.body, {
       where: {
         id: req.params.id,
       },
     });
-    res.send(`User updated succesfully!`);
+    res.send(`User ${req.body.name} updated succesfully!`);
   },
 
   async delete(req, res) {
@@ -89,43 +125,7 @@ const UserController = {
         UserId: req.params.id,
       },
     });
-    res.send("User deleted succesfully!");
-  },
-
-  login(req, res) {
-    User.findOne({
-      where: {
-        email: req.body.email,
-      },
-    }).then((user) => {
-      if (!user) {
-        return res.status(400).send({ message: "Incorrect user or password" });
-      }
-      const isMatch = bcrypt.compareSync(req.body.password, user.password);
-      if (!isMatch) {
-        return res.status(400).send({ message: "Incorrect user or password" });
-      }
-      const token = jwt.sign({ id: user.id }, jwt_secret);
-      Token.create({ token, UserId: user.id });
-      res.send({ message: "Welcome " + user.name + "!", user, token });
-    });
-  },
-
-  async logout(req, res) {
-    try {
-      await Token.destroy({
-        where: {
-          [Op.and]: [
-            { UserId: req.user.id },
-            { token: req.headers.authorization },
-          ],
-        },
-      });
-      res.send({ message: "Logged out succesfully!" });
-    } catch (error) {
-      console.log(error);
-      res.status(500).send({ message: "There has been a problem logging out" });
-    }
+    res.send(`User ${req.body.name} deleted succesfully!`);
   },
 };
 
