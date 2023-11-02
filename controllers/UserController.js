@@ -5,13 +5,18 @@ const { jwt_secret } = require("../config/config.json")["development"];
 
 const UserController = {
   create(req, res) {
-    req.body.role = "user";
-    const password = bcrypt.hashSync(req.body.password, 10);
-    User.create({ ...req.body, password })
-      .then((user) =>
-        res.status(201).send({ message: "User created succesfully!", user })
-      )
-      .catch((err) => console.error(err));
+    try {
+      req.body.role = "user";
+      const password = bcrypt.hashSync(req.body.password, 10);
+
+      const user = User.create({ ...req.body, password });
+
+      res.status(201).send({ message: "User created successfully!", user });
+    } catch (error) {
+      console.error("Error creating user:", error);
+
+      res.status(500).send("An error occurred while creating the user.");
+    }
   },
 
   login(req, res) {
@@ -106,12 +111,33 @@ const UserController = {
   },
 
   async update(req, res) {
-    await User.update(req.body, {
-      where: {
-        id: req.params.id,
-      },
-    });
-    res.send(`User ${req.body.name} updated succesfully!`);
+    const { name, password } = req.body;
+    try {
+      if (password) {
+        const hashedPassword = bcrypt.hashSync(password, 10);
+        await User.update(
+          { name, password: hashedPassword },
+          {
+            where: {
+              id: req.params.id,
+            },
+          }
+        );
+      } else {
+        await User.update(
+          { name },
+          {
+            where: {
+              id: req.params.id,
+            },
+          }
+        );
+      }
+      res.send(`User ${name} updated successfully!`);
+    } catch (error) {
+      console.error("Error updating user:", error);
+      res.status(500).send("An error occurred while updating the user.");
+    }
   },
 
   async delete(req, res) {
@@ -120,12 +146,12 @@ const UserController = {
         id: req.params.id,
       },
     });
-    await Post.destroy({
+    await Order.destroy({
       where: {
         UserId: req.params.id,
       },
     });
-    res.send(`User ${req.body.name} deleted succesfully!`);
+    res.send(`User deleted succesfully!`);
   },
 };
 
