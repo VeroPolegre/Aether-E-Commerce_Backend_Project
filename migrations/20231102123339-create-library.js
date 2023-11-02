@@ -9,6 +9,7 @@ module.exports = {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
       },
+
       UserId: Sequelize.UUID,
       GameId: Sequelize.UUID,
 
@@ -16,6 +17,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
       },
+
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,

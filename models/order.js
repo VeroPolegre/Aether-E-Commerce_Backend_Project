@@ -14,8 +14,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
       },
+
       date: DataTypes.DATE,
       total: DataTypes.DECIMAL,
+
       UserId: DataTypes.UUID,
     },
     {

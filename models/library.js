@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
       },
+
       UserId: DataTypes.UUID,
       GameId: DataTypes.UUID,
     },
