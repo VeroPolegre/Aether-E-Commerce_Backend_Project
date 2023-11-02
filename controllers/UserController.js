@@ -5,18 +5,16 @@ const { jwt_secret } = require("../config/config.json")["development"];
 
 const UserController = {
   create(req, res) {
-    try {
-      req.body.role = "user";
-      const password = bcrypt.hashSync(req.body.password, 10);
-
-      const user = User.create({ ...req.body, password });
-
-      res.status(201).send({ message: "User created successfully!", user });
-    } catch (error) {
-      console.error("Error creating user:", error);
-
-      res.status(500).send("An error occurred while creating the user.");
-    }
+    req.body.role = "user";
+    const password = bcrypt.hashSync(req.body.password, 10);
+    User.create({ ...req.body, password })
+      .then((user) =>
+        res.status(201).send({ message: "User created succesfully!", user })
+      )
+      .catch((err) => {
+        console.error("Error creating user:", error);
+        res.status(500).send("An error occurred while creating the user.");
+      });
   },
 
   login(req, res) {
