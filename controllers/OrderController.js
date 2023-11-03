@@ -20,7 +20,7 @@ const OrderController = {
         GameId: selectedGame.id,
         gameTitle: selectedGame.title,
         date: new Date(),
-        UserId: req.body.UserId,
+        UserId: req.user.id,
         quantity,
         total: totalPrice,
         createdAt: new Date(),
@@ -28,7 +28,6 @@ const OrderController = {
       };
 
       const createdOrder = await Order.create(order);
-
       await OrdersGames.create({
         OrderId: createdOrder.id,
         GameId: selectedGame.id,
@@ -46,7 +45,6 @@ const OrderController = {
       const orders = await Order.findAll({
         include: Game,
       });
-
       res.status(200).json({ orders });
     } catch (err) {
       console.error(err);
