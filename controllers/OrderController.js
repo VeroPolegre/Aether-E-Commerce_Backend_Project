@@ -17,9 +17,12 @@ const OrderController = {
 
       const totalPrice = selectedGame.price * quantity;
       const order = {
-        gameTitle: selectedGame.title,
+        GameId: selectedGame.id,
+        title: selectedGame.title,
         quantity,
         total: totalPrice,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       };
 
       const createdOrder = await Order.create(order);
@@ -29,9 +32,7 @@ const OrderController = {
         GameId: selectedGame.id,
       });
 
-      res
-        .status(201)
-        .json({ message: "Order created successfully", order: createdOrder });
+      res.status(201).json({ message: "Order created successfully!", order });
     } catch (err) {
       console.error(err);
       res.status(500).json({ error: "Error creating order.", err });
