@@ -1,11 +1,10 @@
 const bcrypt = require("bcryptjs");
-const { v4: uuidv4 } = require("uuid");
 ("use strict");
 module.exports = {
   async up(queryInterface, Sequelize) {
     return queryInterface.bulkInsert("Users", [
       {
-        id: uuidv4(),
+        id: "03b96abf-299c-4a27-8e25-14ac6bd9e9a1",
         name: "Vero",
         email: "vero@example.com",
         password: bcrypt.hashSync("adminadmin", 10),
@@ -15,7 +14,7 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        id: uuidv4(),
+        id: "45f1e1c1-82d5-4bb0-8d21-67df2cbe7ec1",
         name: "User1",
         email: "user1@example.com",
         password: bcrypt.hashSync("userpassword1", 10),
@@ -25,7 +24,7 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        id: uuidv4(),
+        id: "f6f26736-87f3-4a72-81d0-745de7c9df24",
         name: "User2",
         email: "user2@example.com",
         password: bcrypt.hashSync("userpassword2", 10),
@@ -35,7 +34,7 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        id: uuidv4(),
+        id: "15a4edc4-dbed-4d84-8bf3-134ab3a5bd05",
         name: "User3",
         email: "user3@example.com",
         password: bcrypt.hashSync("userpassword3", 10),
@@ -45,7 +44,7 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        id: uuidv4(),
+        id: "bf0e193b-9b7a-4de4-8a7c-25331b0ab06a",
         name: "User4",
         email: "user4@example.com",
         password: bcrypt.hashSync("userpassword4", 10),
@@ -55,7 +54,7 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        id: uuidv4(),
+        id: "dba04ce0-794e-44f6-8d06-03c8ff98a511",
         name: "User5",
         email: "user5@example.com",
         password: bcrypt.hashSync("userpassword5", 10),
