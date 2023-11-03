@@ -80,13 +80,13 @@ module.exports = {
       },
       {
         id: "7",
-        title: "Dark Souls III",
+        title: "Forza Horizon",
         description:
-          "A challenging action RPG with dark fantasy themes and intense combat.",
-        release_date: "2016-04-12 00:00:00",
+          "An open-world racing game featuring a wide variety of cars and events.",
+        release_date: "2012-10-23 00:00:00",
         price: 39,
-        genre: "Action RPG",
-        platform: "Xbox One",
+        genre: "Sports & Racing",
+        platform: "Xbox 360",
         rating: 9,
         createdAt: new Date(),
         updatedAt: new Date(),
