@@ -1,4 +1,4 @@
-const { Game, GamesCategories } = require("../models/index.js");
+const { Game, Category, GamesCategories } = require("../models/index.js");
 
 const GameController = {
   async create(req, res) {
@@ -45,6 +45,18 @@ const GameController = {
     } catch (err) {
       console.error(err);
       res.status(404).send({ msg: "Error deleting a game", err });
+    }
+  },
+
+  async getAll(req, res) {
+    try {
+      const game = await Game.findAll({
+        include: [{ model: Category, throught: { attributes: [] } }],
+      });
+      res.send(game);
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("There has been a problem retrieving the games");
     }
   },
 };
