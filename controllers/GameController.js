@@ -1,4 +1,4 @@
-const { Game } = require("../models/index.js");
+const { Game, GamesCategories } = require("../models/index.js");
 
 const GameController = {
   async create(req, res) {
@@ -28,6 +28,23 @@ const GameController = {
     } catch (err) {
       console.error(err);
       res.status(500).send({ msg: "Error updating a game", err });
+    }
+  },
+
+  async delete(req, res) {
+    try {
+      await Game.destroy({
+        where: { id: req.params.id },
+      });
+      await GamesCategories.destroy({
+        where: {
+          GameId: req.params.id,
+        },
+      });
+      res.status(200).send({ msg: `Game with id '${req.params.id}' deleted.` });
+    } catch (err) {
+      console.error(err);
+      res.status(404).send({ msg: "Error deleting a game", err });
     }
   },
 };
