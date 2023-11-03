@@ -9,15 +9,38 @@ const { Op } = Sequelize;
 const GameController = {
   async create(req, res) {
     try {
-      const game = await Game.create(req.body);
-      game.addCategory(req.body.CategoryId);
-      res.status(201).send({
-        msg: `Game '${req.body.title}' created succesfully!`,
-        game,
+      const requiredFields = [
+        "title",
+        "description",
+        "release_date",
+        "price",
+        "genre",
+        "platform",
+        "rating",
+      ];
+      const missingFields = [];
+
+      requiredFields.forEach((field) => {
+        if (!req.body[field]) {
+          missingFields.push(field);
+        }
       });
+
+      if (missingFields.length > 0) {
+        res.status(400).send({
+          msg: "Missing required fields in the request body",
+          missingFields,
+        });
+      } else {
+        const category = await Category.create(req.body);
+        res.status(201).send({
+          msg: `Game '${req.body.title}' created successfully!`,
+          category,
+        });
+      }
     } catch (err) {
       console.error(err);
-      res.status(500).send({ msg: "Error creating a game", err });
+      res.status(500).send({ msg: "Error creating category.", err });
     }
   },
 
