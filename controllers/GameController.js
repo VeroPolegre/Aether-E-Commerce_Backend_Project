@@ -1,15 +1,18 @@
 const { Game } = require("../models/index.js");
 
 const GameController = {
-  create(req, res) {
-    Game.create(req.body)
-      .then(
-        (game) => game.addCategory(req.body.CategoryId),
-        res
-          .status(201)
-          .send({ message: `Game '${req.body.title}' created succesfully!` })
-      )
-      .catch((err) => console.error(err));
+  async create(req, res) {
+    try {
+      const game = await Game.create(req.body);
+      game.addCategory(req.body.CategoryId);
+      res.status(201).send({
+        msg: `Game '${req.body.title}' created succesfully!`,
+        game,
+      });
+    } catch (err) {
+      console.error(err);
+      res.status(500).send({ msg: "Error creating a game", err });
+    }
   },
 };
 

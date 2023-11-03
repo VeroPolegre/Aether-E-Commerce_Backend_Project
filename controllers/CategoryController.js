@@ -1,4 +1,9 @@
-const { Category, Game, Sequelize } = require("../models/index.js");
+const {
+  Category,
+  Game,
+  GamesCategories,
+  Sequelize,
+} = require("../models/index.js");
 const { Op } = Sequelize;
 
 const CategoryController = {
@@ -36,9 +41,14 @@ const CategoryController = {
       await Category.destroy({
         where: { id: req.params.id },
       });
-      res
-        .status(200)
-        .send({ msg: `Category with id ${req.params.id} deleted.` });
+      await GamesCategories.destroy({
+        where: {
+          ProductId: req.params.id,
+        },
+      }),
+        res
+          .status(200)
+          .send({ msg: `Category with id ${req.params.id} deleted.` });
     } catch (err) {
       console.error(err);
       res.status(404).send(err);
@@ -48,7 +58,7 @@ const CategoryController = {
   async getAll(req, res) {
     try {
       const category = await Category.findAll({
-        include: [{ model: Game, throught: { atributes: [] } }],
+        include: [{ model: Game, through: { attributes: [] } }],
       });
       res.send(category);
     } catch (err) {
