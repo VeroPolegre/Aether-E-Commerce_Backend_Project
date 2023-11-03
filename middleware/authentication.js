@@ -13,6 +13,7 @@ const authentication = async (req, res, next) => {
         [Op.and]: [{ UserId: user.id }, { token: token }],
       },
     });
+
     if (!tokenFound) {
       return res.status(401).send({ message: "Token not authorized" });
     }
@@ -33,4 +34,5 @@ const isAdmin = async (req, res, next) => {
   }
   next();
 };
+
 module.exports = { authentication, isAdmin };

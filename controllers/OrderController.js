@@ -14,6 +14,7 @@ const OrderController = {
         });
       });
   },
+
   getAll(req, res) {
     Order.findAll({
       include: [Game],

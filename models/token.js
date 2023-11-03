@@ -3,9 +3,7 @@
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Token extends Model {
-    static associate(models) {
-      // define association here
-    }
+    static associate(models) {}
   }
 
   Token.init(
