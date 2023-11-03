@@ -58,35 +58,48 @@ const CategoryController = {
         .send("There has been a problem retrieving the categories");
     }
   },
-  getById(req, res) {
-    Category.findByPk(req.params.id, {
-      // include: [Game],
-    })
-      .then((category) => res.send(category))
-      .catch((err) => {
-        console.error(err);
-        res.status(500).send({
-          message: "There has been a problem retrieving the categories",
-        });
+
+  async getById(req, res) {
+    try {
+      const category = await Category.findByPk(req.params.id);
+      if (category) {
+        res.send(category);
+      } else {
+        res
+          .status(404)
+          .send({ msg: `Category with id ${req.params.id} not found` });
+      }
+    } catch (err) {
+      console.error(err);
+      res.status(500).send({
+        message: "There has been a problem retrieving the categories",
       });
+    }
   },
 
-  getByName(req, res) {
-    Category.findOne({
-      where: {
-        name: {
-          [Op.like]: `%${req.params.name}%`,
+  async getByName(req, res) {
+    try {
+      const category = await Category.findOne({
+        where: {
+          name: {
+            [Op.like]: `%${req.params.name}%`,
+          },
         },
-      },
-      // include: [Game],
-    })
-      .then((category) => res.send(category))
-      .catch((err) => {
-        console.error(err);
-        res.status(500).send({
-          message: "There has been a problem retrieving the categories",
-        });
       });
+
+      if (category) {
+        res.send(category);
+      } else {
+        res
+          .status(404)
+          .send({ msg: `Category with name '${req.params.name}' not found` });
+      }
+    } catch (err) {
+      console.error(err);
+      res.status(500).send({
+        message: "There has been a problem retrieving the categories",
+      });
+    }
   },
 };
 
