@@ -8,4 +8,5 @@ router.put("/id/:id", GameController.update);
 router.delete("/id/:id", GameController.delete);
 router.get("/", GameController.getAll);
 router.get("/id/:id", GameController.getById);
+router.get("/title/:title", GameController.getByTitle);
 module.exports = router;

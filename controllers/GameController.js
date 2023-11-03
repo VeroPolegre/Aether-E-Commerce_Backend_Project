@@ -1,4 +1,10 @@
-const { Game, Category, GamesCategories } = require("../models/index.js");
+const {
+  Game,
+  Category,
+  GamesCategories,
+  Sequelize,
+} = require("../models/index.js");
+const { Op } = Sequelize;
 
 const GameController = {
   async create(req, res) {
@@ -69,6 +75,30 @@ const GameController = {
         res
           .status(404)
           .send({ msg: `Game with id ${req.params.id} not found` });
+      }
+    } catch (err) {
+      console.error(err);
+      res.status(500).send({
+        message: "There has been a problem retrieving the game",
+      });
+    }
+  },
+  async getByTitle(req, res) {
+    try {
+      const game = await Game.findOne({
+        where: {
+          title: {
+            [Op.like]: `%${req.params.title}%`,
+          },
+        },
+      });
+
+      if (game) {
+        res.send(game);
+      } else {
+        res
+          .status(404)
+          .send({ msg: `Game with name '${req.params.title}' not found` });
       }
     } catch (err) {
       console.error(err);
