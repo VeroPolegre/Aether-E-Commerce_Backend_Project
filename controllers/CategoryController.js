@@ -19,6 +19,15 @@ const CategoryController = {
     });
     res.send(`Category '${req.body.name}' updated succesfully!`);
   },
+
+  async delete(req, res) {
+    await Category.destroy({
+      where: {
+        id: req.params.id,
+      },
+    });
+    res;
+  },
 };
 
 module.exports = CategoryController;
