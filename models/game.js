@@ -7,6 +7,9 @@ module.exports = (sequelize, DataTypes) => {
       Game.belongsToMany(models.Category, {
         through: models.GamesCategories,
       });
+      Game.belongsToMany(models.Order, {
+        through: models.OrdersGames,
+      });
     }
   }
   Game.init(

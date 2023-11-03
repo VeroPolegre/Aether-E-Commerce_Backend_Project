@@ -4,6 +4,9 @@ module.exports = (sequelize, DataTypes) => {
   class Order extends Model {
     static associate(models) {
       Order.belongsTo(models.User);
+      Order.belongsToMany(models.Game, {
+        through: models.OrdersGames,
+      });
     }
   }
   Order.init(

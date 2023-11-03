@@ -1,12 +1,12 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class GamesCategories extends Model {
+  class OrdersGames extends Model {
     static associate(models) {
       // no association here
     }
   }
-  GamesCategories.init(
+  OrdersGames.init(
     {
       id: {
         allowNull: false,
@@ -15,13 +15,13 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: DataTypes.UUIDV4,
       },
 
+      OrderId: DataTypes.UUID,
       GameId: DataTypes.UUID,
-      CategoryId: DataTypes.UUID,
     },
     {
       sequelize,
-      modelName: "GamesCategories",
+      modelName: "OrdersGames",
     }
   );
-  return GamesCategories;
+  return OrdersGames;
 };
