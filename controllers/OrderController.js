@@ -37,6 +37,19 @@ const OrderController = {
       res.status(500).json({ error: "Error creating order.", err });
     }
   },
+
+  async getAll(req, res) {
+    try {
+      const orders = await Order.findAll({
+        include: Game,
+      });
+
+      res.status(200).json({ orders });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: "Error fetching orders.", err });
+    }
+  },
 };
 
 module.exports = OrderController;
