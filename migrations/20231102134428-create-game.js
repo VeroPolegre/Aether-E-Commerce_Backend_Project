@@ -17,6 +17,8 @@ module.exports = {
       platform: Sequelize.STRING,
       rating: Sequelize.INTEGER,
 
+      LibraryId: Sequelize.UUID,
+
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

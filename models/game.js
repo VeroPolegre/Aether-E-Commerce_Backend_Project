@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
       platform: DataTypes.STRING,
       rating: DataTypes.INTEGER,
 
-      PublisherId: DataTypes.UUID,
+      LibraryId: DataTypes.UUID,
     },
     {
       sequelize,
