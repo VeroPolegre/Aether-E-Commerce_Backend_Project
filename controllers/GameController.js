@@ -59,6 +59,24 @@ const GameController = {
       res.status(500).send("There has been a problem retrieving the games");
     }
   },
+
+  async getById(req, res) {
+    try {
+      const game = await Game.findByPk(req.params.id);
+      if (game) {
+        res.send(game);
+      } else {
+        res
+          .status(404)
+          .send({ msg: `Game with id ${req.params.id} not found` });
+      }
+    } catch (err) {
+      console.error(err);
+      res.status(500).send({
+        message: "There has been a problem retrieving the game",
+      });
+    }
+  },
 };
 
 module.exports = GameController;
