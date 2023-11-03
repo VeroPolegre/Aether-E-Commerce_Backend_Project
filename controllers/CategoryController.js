@@ -1,4 +1,4 @@
-const { Category } = require("../models/index.js");
+const { Category, Game } = require("../models/index.js");
 
 const CategoryController = {
   create(req, res) {
@@ -28,6 +28,18 @@ const CategoryController = {
     });
     res;
   },
-};
 
+  getAll(req, res) {
+    Category.findAll({
+      // include: [Game],
+    })
+      .then((categories) => res.send(categories))
+      .catch((err) => {
+        console.log(err);
+        res.status(500).send({
+          message: "There has been a problem retrieving the categories",
+        });
+      });
+  },
+};
 module.exports = CategoryController;
