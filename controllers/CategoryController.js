@@ -1,4 +1,5 @@
-const { Category, Game } = require("../models/index.js");
+const { Category, Game, Sequelize } = require("../models/index.js");
+const { Op } = Sequelize;
 
 const CategoryController = {
   create(req, res) {
@@ -33,9 +34,40 @@ const CategoryController = {
     Category.findAll({
       // include: [Game],
     })
-      .then((categories) => res.send(categories))
+      .then((category) => res.send(category))
       .catch((err) => {
         console.log(err);
+        res.status(500).send({
+          message: "There has been a problem retrieving the categories",
+        });
+      });
+  },
+
+  getById(req, res) {
+    Category.findByPk(req.params.id, {
+      // include: [Game],
+    })
+      .then((category) => res.send(category))
+      .catch((err) => {
+        console.error(err);
+        res.status(500).send({
+          message: "There has been a problem retrieving the categories",
+        });
+      });
+  },
+
+  getOneByName(req, res) {
+    Category.findOne({
+      where: {
+        name: {
+          [Op.like]: `%${req.params.name}%`,
+        },
+      },
+      // include: [Game],
+    })
+      .then((category) => res.send(category))
+      .catch((err) => {
+        console.error(err);
         res.status(500).send({
           message: "There has been a problem retrieving the categories",
         });
