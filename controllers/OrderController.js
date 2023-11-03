@@ -18,7 +18,9 @@ const OrderController = {
       const totalPrice = selectedGame.price * quantity;
       const order = {
         GameId: selectedGame.id,
-        title: selectedGame.title,
+        gameTitle: selectedGame.title,
+        date: new Date(),
+        UserId: req.body.UserId,
         quantity,
         total: totalPrice,
         createdAt: new Date(),
