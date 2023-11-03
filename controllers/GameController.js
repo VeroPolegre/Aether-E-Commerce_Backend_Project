@@ -5,7 +5,7 @@ const GameController = {
     Game.create(req.body)
       .then(
         (game) => game.addCategory(req.body.CategoryId),
-        res.status(201).send({ message: "Game created succesfully!", game })
+        res.status(201).send({ message: "Game created succesfully!" })
       )
       .catch((err) => console.error(err));
   },
