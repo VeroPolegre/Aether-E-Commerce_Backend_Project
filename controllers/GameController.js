@@ -110,27 +110,49 @@ const GameController = {
 
   async getByPrice(req, res) {
     try {
-      const minPrice = parseFloat(req.query.minPrice) || 0;
-      const maxPrice =
-        parseFloat(req.query.maxPrice) || Number.MAX_SAFE_INTEGER;
-
-      const games = await Game.findAll({
+      const price = parseFloat(req.params.price);
+      if (isNaN(price)) {
+        return res.status(400).send("Invalid price format");
+      }
+      const game = await Game.findOne({
         where: {
-          price: {
-            [Op.between]: [minPrice, maxPrice],
-          },
+          price: price,
         },
         include: [{ model: Category, through: { attributes: [] } }],
       });
-
-      res.send(games);
+      if (game) {
+        res.send(game);
+      } else {
+        res.status(404).send("No game found with the specified price");
+      }
     } catch (err) {
       console.error(err);
       res
         .status(500)
-        .send("There has been a problem retrieving the games by price");
+        .send("There has been a problem retrieving the game by price");
+    }
+  },
+
+  async getByDescendingPrice(req, res) {
+    try {
+      const games = await Game.findAll({
+        include: [{ model: Category, through: { attributes: [] } }],
+        order: [["price", "DESC"]],
+      });
+
+      if (games.length > 0) {
+        res.send(games);
+      } else {
+        res.status(404).send("No games found.");
+      }
+    } catch (err) {
+      console.error(err);
+      res
+        .status(500)
+        .send(
+          "There has been a problem retrieving the games by descending price."
+        );
     }
   },
 };
-
 module.exports = GameController;
