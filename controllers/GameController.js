@@ -107,6 +107,30 @@ const GameController = {
       });
     }
   },
+
+  async getByPrice(req, res) {
+    try {
+      const minPrice = parseFloat(req.query.minPrice) || 0;
+      const maxPrice =
+        parseFloat(req.query.maxPrice) || Number.MAX_SAFE_INTEGER;
+
+      const games = await Game.findAll({
+        where: {
+          price: {
+            [Op.between]: [minPrice, maxPrice],
+          },
+        },
+        include: [{ model: Category, through: { attributes: [] } }],
+      });
+
+      res.send(games);
+    } catch (err) {
+      console.error(err);
+      res
+        .status(500)
+        .send("There has been a problem retrieving the games by price");
+    }
+  },
 };
 
 module.exports = GameController;

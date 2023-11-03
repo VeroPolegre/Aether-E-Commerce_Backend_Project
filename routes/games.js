@@ -9,4 +9,5 @@ router.delete("/id/:id", GameController.delete);
 router.get("/", GameController.getAll);
 router.get("/id/:id", GameController.getById);
 router.get("/title/:title", GameController.getByTitle);
+router.get("/price/:price", GameController.getByPrice);
 module.exports = router;
