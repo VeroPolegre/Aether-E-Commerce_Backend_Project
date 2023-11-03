@@ -18,7 +18,7 @@ const CategoryController = {
         id: req.params.id,
       },
     });
-    res.send(`Category '${req.body.name}' updated succesfully!`);
+    res.status(200).send(`Category '${req.body.name}' updated succesfully!`);
   },
 
   async delete(req, res) {
@@ -27,7 +27,7 @@ const CategoryController = {
         id: req.params.id,
       },
     });
-    res;
+    res.status(200).send(`Category deleted succesfully!`);
   },
 
   getAll(req, res) {
@@ -74,4 +74,5 @@ const CategoryController = {
       });
   },
 };
+
 module.exports = CategoryController;
