@@ -56,7 +56,7 @@ const CategoryController = {
       });
   },
 
-  getOneByName(req, res) {
+  getByName(req, res) {
     Category.findOne({
       where: {
         name: {

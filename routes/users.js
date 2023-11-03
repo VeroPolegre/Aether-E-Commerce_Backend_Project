@@ -18,7 +18,7 @@ router.put(
   isAdmin,
   UserController.changeRoleToUser
 );
-router.put("/:id", authentication, UserController.update);
+router.put("/id/:id", authentication, UserController.update);
 router.delete("/logout", authentication, UserController.logout);
-router.delete("/:id", authentication, isAdmin, UserController.delete);
+router.delete("/id/:id", authentication, isAdmin, UserController.delete);
 module.exports = router;

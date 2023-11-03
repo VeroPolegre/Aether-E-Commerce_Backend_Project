@@ -14,7 +14,7 @@ const authentication = async (req, res, next) => {
       },
     });
     if (!tokenFound) {
-      return res.status(401).send({ message: "Not authorized" });
+      return res.status(401).send({ message: "Token not authorized" });
     }
     req.user = user;
     next();
