@@ -32,15 +32,15 @@ const GameController = {
           missingFields,
         });
       } else {
-        const category = await Category.create(req.body);
+        const game = await Game.create(req.body);
         res.status(201).send({
           msg: `Game '${req.body.title}' created successfully!`,
-          category,
+          game,
         });
       }
     } catch (err) {
       console.error(err);
-      res.status(500).send({ msg: "Error creating category.", err });
+      res.status(500).send({ msg: "Error creating game.", err });
     }
   },
 
