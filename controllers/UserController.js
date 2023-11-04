@@ -100,12 +100,12 @@ const UserController = {
   },
 
   async update(req, res) {
-    const { name, password } = req.body;
+    const { name, email, password, avatar } = req.body;
     try {
       if (password) {
         const hashedPassword = bcrypt.hashSync(password, 10);
         await User.update(
-          { name, password: hashedPassword },
+          { name, email, password: hashedPassword, avatar },
           {
             where: {
               id: req.params.id,
@@ -114,7 +114,7 @@ const UserController = {
         );
       } else {
         await User.update(
-          { name },
+          { name, email, avatar },
           {
             where: {
               id: req.params.id,
