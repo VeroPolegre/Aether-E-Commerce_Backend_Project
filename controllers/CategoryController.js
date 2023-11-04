@@ -43,7 +43,7 @@ const CategoryController = {
       });
       await GamesCategories.destroy({
         where: {
-          ProductId: req.params.id,
+          GameId: req.params.id,
         },
       }),
         res
