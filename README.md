@@ -40,6 +40,8 @@
 
 <h2><samp> 📝 Diagram </samp></h2>
 
+![Vero-E-Commerce_Aether](https://github.com/VeroPolegre/Aether-E-Commerce_Backend_Project/assets/145065743/fd138498-f16b-4ef7-bfd5-31196fac587f)
+
 # <h2 align="center"><samp>  ⬇️ Download  </samp></h2>
 
 ```bash
