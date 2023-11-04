@@ -35,4 +35,14 @@ const isAdmin = async (req, res, next) => {
   next();
 };
 
-module.exports = { authentication, isAdmin };
+const isSuperAdmin = async (req, res, next) => {
+  const admins = ["superadmin"];
+  if (!admins.includes(req.user.role)) {
+    return res.status(403).send({
+      message: "You do not have SuperAdmin access",
+    });
+  }
+  next();
+};
+
+module.exports = { authentication, isAdmin, isSuperAdmin };

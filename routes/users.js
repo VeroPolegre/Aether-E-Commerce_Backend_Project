@@ -1,11 +1,21 @@
 const express = require("express");
 const router = express.Router();
-const { authentication, isAdmin } = require("../middleware/authentication");
+const {
+  authentication,
+  isAdmin,
+  isSuperAdmin,
+} = require("../middleware/authentication");
 const UserController = require("../controllers/UserController");
 
 router.post("/", UserController.create);
 router.post("/login", UserController.login);
 router.get("/", authentication, UserController.getAll);
+router.put(
+  "/:UserId/changeRoleToSuperAdmin",
+  authentication,
+  isSuperAdmin,
+  UserController.changeRoleToSuperAdmin
+);
 router.put(
   "/:UserId/changeRoleToAdmin",
   authentication,

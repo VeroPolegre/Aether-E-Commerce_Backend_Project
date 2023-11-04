@@ -5,7 +5,7 @@ const { jwt_secret } = require("../config/config.json")["development"];
 const { Op } = Sequelize;
 
 const UserController = {
-  create(req, res) {
+  async create(req, res) {
     const requiredFields = ["name", "email", "password"];
     const missingFields = requiredFields.filter((field) => !req.body[field]);
     if (missingFields.length > 0) {
@@ -15,88 +15,117 @@ const UserController = {
     }
     req.body.role = "user";
     const password = bcrypt.hashSync(req.body.password, 10);
-    User.create({ ...req.body, password })
-      .then((user) =>
-        res.status(201).send({ message: "User created successfully!", user })
-      )
-      .catch((err) => {
-        console.error("Error creating user:", err);
-        res.status(500).send("An error occurred while creating the user.");
-      });
+
+    try {
+      const user = await User.create({ ...req.body, password });
+      res.status(201).send({ message: "User created successfully!", user });
+    } catch (err) {
+      console.error("Error creating user:", err);
+      res.status(500).send("An error occurred while creating the user.");
+    }
   },
 
-  login(req, res) {
-    User.findOne({
-      where: {
-        email: req.body.email,
-      },
-    }).then((user) => {
+  async login(req, res) {
+    try {
+      const user = await User.findOne({
+        where: {
+          email: req.body.email,
+        },
+      });
+
       if (!user) {
         return res.status(400).send({ message: "Incorrect user or password" });
       }
+
       const isMatch = bcrypt.compareSync(req.body.password, user.password);
       if (!isMatch) {
         return res.status(400).send({ message: "Incorrect user or password" });
       }
+
       const token = jwt.sign({ id: user.id }, jwt_secret);
-      Token.create({ token, UserId: user.id });
+      await Token.create({ token, UserId: user.id });
       res.send({ message: "Welcome " + user.name + "!", user, token });
-    });
+    } catch (err) {
+      console.error("Error during login:", err);
+      res.status(500).send("An error occurred during login.");
+    }
   },
 
-  getAll(req, res) {
-    User.findAll({
-      include: [Order],
-    })
-      .then((users) => res.send(users))
-      .catch((err) => {
-        console.log(err);
-        res.status(500).send({
-          message: "Problem getting all users",
-        });
+  async getAll(req, res) {
+    try {
+      const users = await User.findAll({
+        include: [Order],
       });
+      res.send(users);
+    } catch (err) {
+      console.log(err);
+      res.status(500).send({
+        message: "Problem getting all users",
+      });
+    }
   },
 
-  changeRoleToAdmin(req, res) {
+  async changeRoleToSuperAdmin(req, res) {
     const { UserId } = req.params;
-    User.findByPk(UserId)
-      .then((user) => {
-        if (!user) {
-          return res.status(404).send({ message: "User not found" });
-        }
 
-        user
-          .update({ role: "admin" })
-          .then((updatedUser) => {
-            res.status(200).send({
-              msg: `Updated ${user.name}'s role to admin`,
-              updatedUser,
-            });
-          })
-          .catch((err) => console.error(err));
-      })
-      .catch((err) => console.error(err));
+    try {
+      const user = await User.findByPk(UserId);
+
+      if (!user) {
+        return res.status(404).send({ message: "User not found" });
+      }
+
+      const updatedUser = await user.update({ role: "superadmin" });
+      res.status(200).send({
+        msg: `Updated ${user.name}'s role to superadmin`,
+        updatedUser,
+      });
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("An error occurred during role update.");
+    }
   },
 
-  changeRoleToUser(req, res) {
+  async changeRoleToAdmin(req, res) {
     const { UserId } = req.params;
-    User.findByPk(UserId)
-      .then((user) => {
-        if (!user) {
-          return res.status(404).send({ message: "User not found" });
-        }
 
-        user
-          .update({ role: "user" })
-          .then((updatedUser) => {
-            res.status(200).send({
-              msg: `Updated ${user.name}'s role to user`,
-              updatedUser,
-            });
-          })
-          .catch((err) => console.error(err));
-      })
-      .catch((err) => console.error(err));
+    try {
+      const user = await User.findByPk(UserId);
+
+      if (!user) {
+        return res.status(404).send({ message: "User not found" });
+      }
+
+      const updatedUser = await user.update({ role: "admin" });
+      res.status(200).send({
+        msg: `Updated ${user.name}'s role to admin`,
+        updatedUser,
+      });
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("An error occurred during role update.");
+    }
+  },
+
+  async changeRoleToUser(req, res) {
+    const { UserId } = req.params;
+
+    try {
+      const user = await User.findByPk(UserId);
+
+      if (!user) {
+        return res.status(404).send({ message: "User not found" });
+      }
+
+      const updatedUser = await user.update({ role: "user" });
+      res.status(200).send({
+        msg: `Updated ${user.name}'s role to user`,
+        updatedUser,
+      });
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("An error occurred during role update.");
+    }
   },
 
   async update(req, res) {
