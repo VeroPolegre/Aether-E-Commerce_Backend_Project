@@ -50,6 +50,24 @@ const ReviewController = {
       res.status(500).send({ msg: "Error creating a review", err });
     }
   },
+
+  async getAll(req, res) {
+    try {
+      const reviews = await Review.findAll({
+        include: [
+          {
+            model: User,
+            attributes: ["id", "name"],
+          },
+        ],
+      });
+
+      res.send(reviews);
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("There has been a problem retrieving the reviews");
+    }
+  },
 };
 
 module.exports = ReviewController;

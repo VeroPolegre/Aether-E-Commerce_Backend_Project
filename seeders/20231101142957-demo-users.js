@@ -25,8 +25,8 @@ module.exports = {
       },
       {
         id: "1",
-        name: "User1",
-        email: "user1@example.com",
+        name: "Ely",
+        email: "ely@example.com",
         password: bcrypt.hashSync("1234", 10),
         avatar: "https://example.com/avatar2.jpg",
         role: "user",
@@ -35,8 +35,8 @@ module.exports = {
       },
       {
         id: "2",
-        name: "User2",
-        email: "user2@example.com",
+        name: "Reyes",
+        email: "rpnt@example.com",
         password: bcrypt.hashSync("1234", 10),
         avatar: "https://example.com/avatar3.jpg",
         role: "user",
@@ -45,8 +45,8 @@ module.exports = {
       },
       {
         id: "3",
-        name: "User3",
-        email: "user3@example.com",
+        name: "Javi",
+        email: "javi@example.com",
         password: bcrypt.hashSync("1234", 10),
         avatar: "https://example.com/avatar4.jpg",
         role: "user",
