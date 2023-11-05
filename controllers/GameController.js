@@ -110,6 +110,10 @@ const GameController = {
       const game = await Game.findByPk(req.params.id, {
         include: [
           {
+            model: Category,
+            through: { attributes: [] },
+          },
+          {
             model: Review,
             include: [
               {
@@ -143,6 +147,21 @@ const GameController = {
             [Op.like]: `%${req.params.title}%`,
           },
         },
+        include: [
+          {
+            model: Category,
+            through: { attributes: [] },
+          },
+          {
+            model: Review,
+            include: [
+              {
+                model: User,
+                attributes: ["id", "name"],
+              },
+            ],
+          },
+        ],
       });
 
       if (game) {
