@@ -107,7 +107,20 @@ const GameController = {
 
   async getById(req, res) {
     try {
-      const game = await Game.findByPk(req.params.id);
+      const game = await Game.findByPk(req.params.id, {
+        include: [
+          {
+            model: Review,
+            include: [
+              {
+                model: User,
+                attributes: ["id", "name"],
+              },
+            ],
+          },
+        ],
+      });
+
       if (game) {
         res.send(game);
       } else {
