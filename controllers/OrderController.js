@@ -1,4 +1,4 @@
-const { Order, Game, OrdersGames } = require("../models/index.js");
+const { Order, Game, OrdersGames, Library } = require("../models/index.js");
 
 const OrderController = {
   async create(req, res) {
@@ -31,6 +31,11 @@ const OrderController = {
       await OrdersGames.create({
         OrderId: createdOrder.id,
         GameId: selectedGame.id,
+      });
+
+      await Library.create({
+        GameId: selectedGame.id,
+        UserId: req.user.id,
       });
 
       res.status(201).json({ message: "Order created successfully!", order });
