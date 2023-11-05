@@ -1,4 +1,12 @@
-const { User, Order, Token, Review, Sequelize } = require("../models/index.js");
+const {
+  User,
+  Order,
+  Token,
+  Review,
+  Library,
+  Game,
+  Sequelize,
+} = require("../models/index.js");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { jwt_secret } = require("../config/config.json")["development"];
@@ -60,6 +68,9 @@ const UserController = {
           },
           {
             model: Order,
+          },
+          {
+            model: Library,
           },
         ],
       });

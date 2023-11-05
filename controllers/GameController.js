@@ -35,6 +35,9 @@ const GameController = {
         });
       } else {
         const game = await Game.create(req.body);
+
+        await game.update({ LibraryId: req.user.id });
+
         res.status(201).send({
           msg: `Game '${req.body.title}' created successfully!`,
           game,
