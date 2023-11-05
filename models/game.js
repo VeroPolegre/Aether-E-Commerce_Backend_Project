@@ -4,6 +4,7 @@ module.exports = (sequelize, DataTypes) => {
   class Game extends Model {
     static associate(models) {
       Game.belongsTo(models.Library);
+      Game.hasMany(models.Review);
       Game.belongsToMany(models.Category, {
         through: models.GamesCategories,
       });

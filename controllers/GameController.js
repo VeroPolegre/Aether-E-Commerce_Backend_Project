@@ -2,6 +2,8 @@ const {
   Game,
   Category,
   GamesCategories,
+  Review,
+  User,
   Sequelize,
 } = require("../models/index.js");
 const { Op } = Sequelize;
@@ -80,7 +82,21 @@ const GameController = {
   async getAll(req, res) {
     try {
       const game = await Game.findAll({
-        include: [{ model: Category, throught: { attributes: [] } }],
+        include: [
+          {
+            model: Category,
+            through: { attributes: [] },
+          },
+          {
+            model: Review,
+            include: [
+              {
+                model: User,
+                attributes: ["id", "name"],
+              },
+            ],
+          },
+        ],
       });
       res.send(game);
     } catch (err) {
