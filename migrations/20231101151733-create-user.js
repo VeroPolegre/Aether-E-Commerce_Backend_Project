@@ -15,6 +15,7 @@ module.exports = {
       password: Sequelize.STRING,
       avatar: Sequelize.STRING,
       role: Sequelize.STRING,
+      confirmed: Sequelize.BOOLEAN,
 
       createdAt: {
         allowNull: false,
