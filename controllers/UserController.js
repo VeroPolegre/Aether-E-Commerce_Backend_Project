@@ -13,23 +13,18 @@ const { jwt_secret } = require("../config/config.json")["development"];
 const { Op } = Sequelize;
 
 const UserController = {
-  async create(req, res) {
-    const requiredFields = ["name", "email", "password"];
-    const missingFields = requiredFields.filter((field) => !req.body[field]);
-    if (missingFields.length > 0) {
-      return res.status(400).send({
-        message: `Missing required fields: ${missingFields.join(", ")}`,
-      });
-    }
-    req.body.role = "user";
-    const password = bcrypt.hashSync(req.body.password, 10);
-
+  async create(req, res, next) {
     try {
+      req.body.role = "user";
+      let password;
+      if (req.body.password) {
+        password = await bcrypt.hashSync(req.body.password, 10);
+      }
       const user = await User.create({ ...req.body, password });
       res.status(201).send({ message: "User created successfully!", user });
     } catch (err) {
       console.error("Error creating user:", err);
-      res.status(500).send("An error occurred while creating the user.");
+      next(err);
     }
   },
 

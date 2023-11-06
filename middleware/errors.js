@@ -2,7 +2,7 @@ const handleValidationError = (err, res) => {
   let errors = err.errors.map((el) => el.message);
 
   if (errors.length > 1) {
-    const msgErr = errors.join(" || ");
+    const msgErr = errors.join(" && ");
 
     res.status(400).send({ messages: msgErr });
   } else {
@@ -17,7 +17,7 @@ const typeError = (err, req, res, next) => {
   ) {
     handleValidationError(err, res);
   } else {
-    res.status(500).send({ msg: "Hubo un problema", err });
+    res.status(500).send({ msg: "An error has ocurred", err });
   }
 };
 
