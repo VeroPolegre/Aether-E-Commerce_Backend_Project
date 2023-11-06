@@ -20,7 +20,11 @@ const UserController = {
       if (req.body.password) {
         password = await bcrypt.hashSync(req.body.password, 10);
       }
-      const user = await User.create({ ...req.body, password });
+      const user = await User.create({
+        ...req.body,
+        password,
+        confirmed: false,
+      });
       res.status(201).send({ message: "User created successfully!", user });
     } catch (err) {
       console.error("Error creating user:", err);
@@ -38,6 +42,10 @@ const UserController = {
 
       if (!user) {
         return res.status(400).send({ message: "Incorrect user or password" });
+      }
+
+      if (!user.confirmed) {
+        return res.status(400).send({ message: "Confirm your email" });
       }
 
       const isMatch = bcrypt.compareSync(req.body.password, user.password);
