@@ -26,6 +26,11 @@ const UserController = {
         password,
         confirmed: false,
       });
+      const emailToken = jwt.sign({ email: req.body.email }, jwt_secret, {
+        expiresIn: "48h",
+      });
+      const url = "http://localhost:8080/users/confirm/" + emailToken;
+
       await transporter.sendMail({
         to: req.body.email,
 
@@ -33,7 +38,7 @@ const UserController = {
 
         html: `<h3> Welcome! You have to confirm your email address </h3>
         
-        <a href="#"> Click here to confirm your email!</a>
+        <a href="${url}"> Click here to confirm your email!</a>
         
         `,
       });
@@ -46,11 +51,13 @@ const UserController = {
 
   async confirm(req, res) {
     try {
+      const token = req.params.email;
+      const payload = jwt.verify(token, jwt_secret);
       await User.update(
         { confirmed: true },
         {
           where: {
-            email: req.params.email,
+            email: payload.email,
           },
         }
       );
