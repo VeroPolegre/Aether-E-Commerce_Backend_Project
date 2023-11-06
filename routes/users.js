@@ -8,6 +8,7 @@ const {
 const UserController = require("../controllers/UserController");
 
 router.post("/", UserController.create);
+router.get("/confirm/:email", UserController.confirm);
 router.post("/login", UserController.login);
 router.get("/", authentication, UserController.getAll);
 router.put(

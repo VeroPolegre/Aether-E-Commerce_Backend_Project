@@ -7,6 +7,7 @@ const {
   Game,
   Sequelize,
 } = require("../models/index.js");
+const transporter = require("../config/nodemailer");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { jwt_secret } = require("../config/config.json")["development"];
@@ -25,10 +26,38 @@ const UserController = {
         password,
         confirmed: false,
       });
+      await transporter.sendMail({
+        to: req.body.email,
+
+        subject: "Please confirm your email",
+
+        html: `<h3> Welcome! You have to confirm your email address </h3>
+        
+        <a href="#"> Click here to confirm your email!</a>
+        
+        `,
+      });
       res.status(201).send({ message: "User created successfully!", user });
     } catch (err) {
       console.error("Error creating user:", err);
       next(err);
+    }
+  },
+
+  async confirm(req, res) {
+    try {
+      await User.update(
+        { confirmed: true },
+        {
+          where: {
+            email: req.params.email,
+          },
+        }
+      );
+
+      res.status(201).send("User confirmed succesfully!");
+    } catch (error) {
+      console.error(error);
     }
   },
 
