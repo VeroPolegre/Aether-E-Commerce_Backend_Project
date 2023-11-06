@@ -16,21 +16,20 @@ const { Op } = Sequelize;
 const UserController = {
   async create(req, res, next) {
     try {
-      req.body.role = "user";
-      let password;
-      if (req.body.password) {
-        password = await bcrypt.hashSync(req.body.password, 10);
-      }
+      const hash = await bcrypt.hashSync(req.body.password, 10);
+
       const user = await User.create({
         ...req.body,
-        password,
+        password: hash,
         confirmed: false,
+        role: "user",
       });
+
       const emailToken = jwt.sign({ email: req.body.email }, jwt_secret, {
         expiresIn: "48h",
       });
-      const url = "http://localhost:8080/users/confirm/" + emailToken;
 
+      const url = "http://localhost:8080/users/confirm/" + emailToken;
       await transporter.sendMail({
         to: req.body.email,
 
