@@ -5,7 +5,8 @@
     Backend project made with Node.js && Express.js technologies using MySQL && Sequelize.
     <br /> 
     ⭐
-    <a href="https://github.com/victorcodigos/1-proyecto-e-commerce-backend/issues">Request Feature</a>
+    <a href="https://github.com/VeroPolegre/Aether-E-Commerce_Backend_Project
+/issues">Request Feature</a>
     ⭐
     <br />
     
