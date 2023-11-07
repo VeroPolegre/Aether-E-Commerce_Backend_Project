@@ -44,8 +44,30 @@ Aether, a database schema designed with well-defined relationships between table
 
 </p>
 
+<h2><samp> 📝 Diagram </samp></h2>
+
+![Vero-E-Commerce_Aether](https://github.com/VeroPolegre/Aether-E-Commerce_Backend_Project/assets/145065743/fd138498-f16b-4ef7-bfd5-31196fac587f)
+
+# <h2 align="center"><samp>  ⬇️ Download  </samp></h2>
+
+```bash
+
+ # Clone the repository
+ $ git clone https://github.com/VeroPolegre/Aether-E-Commerce_Backend_Project
+ 
+ # Enter the directory
+ $ cd Aether-E-Commerce_Backend_Project
+
+ # Install the dependencies
+ $ npm install
+
+ # start or project
+ $ npm start 
+
+```
+
 # <h2 align="center"><samp>  🚀 Development  </samp></h2>
-Project endpoints
+# <h2><samp> 🎯 Endpoints  </samp></h2>
 
 Endpoints play a pivotal role in shaping the interaction between a client and a server, facilitating the exchange of data and enabling the functionality of web applications. They are specific, predefined URLs or routes on a server that are designed to handle incoming HTTP requests from clients, such as web browsers, mobile apps, or other software. In this backend project, the use of endpoints is fundamental to the creation of a robust and interactive REST API.
 
@@ -100,28 +122,6 @@ Seeders:
     - Products associated with the categories.
     - Reviews associated with the users with text and date.
 
-<h2><samp> 📝 Diagram </samp></h2>
-
-![Vero-E-Commerce_Aether](https://github.com/VeroPolegre/Aether-E-Commerce_Backend_Project/assets/145065743/fd138498-f16b-4ef7-bfd5-31196fac587f)
-
-# <h2 align="center"><samp>  ⬇️ Download  </samp></h2>
-
-```bash
-
- # Clone the repository
- $ git clone https://github.com/VeroPolegre/Aether-E-Commerce_Backend_Project
- 
- # Enter the directory
- $ cd Aether-E-Commerce_Backend_Project
-
- # Install the dependencies
- $ npm install
-
- # start or project
- $ npm start 
-
-```
-
 # <h2 align="center"><samp>  Postman for testing the REST API 🖥️  </samp></h2>
 
 CRUD, an abbreviation for CREATE, READ, UPDATE, and DELETE, represents the fundamental actions involved in establishing and controlling persistent data entities, primarily within relational and NoSQL databases.
@@ -156,18 +156,18 @@ access before entering a route, error handling, data validation, etc.
 
 In this project JSON web token, admin and superadmin authentication, handling of validation errors and express JSON was used as middleware tools.
 
-Token authentication:
+- Token authentication:
 
 Defines a route to which only logged in users can enter, therefore,
 You need to check before entering that route, whether the user is logged in or not.
 
-Admin authentication:
+- Admin authentication:
 
 Defines a route to which only administrator or superadmins users can enter, so
 Therefore, you need to check before entering that route, whether or not the user is a
 administrator.
 
-Validations:
+- Validations:
 
 Data validation is a process that ensures the delivery of clean and clear data to the programs, applications and services that support it.
 they use. Checks the integrity and validity of the data being entered into different software and
