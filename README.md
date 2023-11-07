@@ -25,11 +25,11 @@ Aether, a database schema designed with well-defined relationships between table
  
 - User login + logout. Token (JWT) + middleware
  
-- Creation of a CRUD.
+- Creation of CRUD
  
-- At least one Many to Many relationship and another One to Many.
+- One to Many and Many to Many relationships
  
-- Use of seeders.
+- Use of seeders
   
 </samp>
 
