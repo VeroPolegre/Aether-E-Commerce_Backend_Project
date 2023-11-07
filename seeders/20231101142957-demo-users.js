@@ -4,19 +4,19 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     return queryInterface.bulkInsert("Users", [
       {
-        id: "55",
-        name: "Tifa",
-        email: "tifa@example.com",
+        id: "1",
+        name: "Vero",
+        email: "vero@example.com",
         password: bcrypt.hashSync("adminadmin", 10),
-        avatar: "https://example.com/avatar1.jpg",
+        avatar: "https://example.com/avatar.jpg",
         role: "superadmin",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
-        id: "33",
-        name: "Vero",
-        email: "vero@example.com",
+        id: "2",
+        name: "Tifa",
+        email: "tifa@example.com",
         password: bcrypt.hashSync("adminadmin", 10),
         avatar: "https://example.com/avatar1.jpg",
         role: "admin",
@@ -24,7 +24,7 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        id: "1",
+        id: "3",
         name: "Ely",
         email: "ely@example.com",
         password: bcrypt.hashSync("1234", 10),
@@ -34,7 +34,7 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        id: "2",
+        id: "4",
         name: "Reyes",
         email: "rpnt@example.com",
         password: bcrypt.hashSync("1234", 10),
@@ -44,7 +44,7 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        id: "3",
+        id: "5",
         name: "Javi",
         email: "javi@example.com",
         password: bcrypt.hashSync("1234", 10),
@@ -54,9 +54,9 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        id: "4",
-        name: "Morrison",
-        email: "morrison@example.com",
+        id: "6",
+        name: "Sofi",
+        email: "sofi@example.com",
         password: bcrypt.hashSync("1234", 10),
         avatar: "https://example.com/avatar5.jpg",
         role: "user",
@@ -64,9 +64,9 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        id: "5",
+        id: "7",
         name: "Sasha",
-        email: "user5@example.com",
+        email: "sasha@example.com",
         password: bcrypt.hashSync("1234", 10),
         avatar: "https://example.com/avatar6.jpg",
         role: "user",

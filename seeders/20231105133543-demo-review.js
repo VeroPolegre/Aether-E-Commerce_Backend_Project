@@ -129,7 +129,7 @@ module.exports = {
       "20",
     ];
 
-    const userIds = ["55", "33", "1", "2", "3", "4", "5"];
+    const userIds = ["1", "2", "3", "4", "5", "6", "7"];
     const reviews = gameReviews.map((review, index) => ({
       id: (index + 1).toString(),
       rating: review.rating,

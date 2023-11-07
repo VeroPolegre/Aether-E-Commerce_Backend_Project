@@ -15,3 +15,4 @@ app.use("/reviews", require("./routes/reviews"));
 app.use(typeError);
 
 app.listen(PORT, () => console.log("Server started at port " + PORT));
+module.exports = app;
