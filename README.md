@@ -61,7 +61,7 @@ Aether, a database schema designed with well-defined relationships between table
  # Install the dependencies
  $ npm install
 
- # start or project
+ # Start the project
  $ npm start 
 
 ```
