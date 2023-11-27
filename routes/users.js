@@ -7,7 +7,7 @@ const {
 } = require("../middleware/authentication");
 const UserController = require("../controllers/UserController");
 
-router.post("/", UserController.create);
+router.post("/join", UserController.create);
 router.get("/confirm/:email", UserController.confirm);
 router.post("/login", UserController.login);
 router.get("/", authentication, UserController.getAll);
