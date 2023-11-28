@@ -10,7 +10,9 @@ const UserController = require("../controllers/UserController");
 router.post("/join", UserController.create);
 router.get("/confirm/:email", UserController.confirm);
 router.post("/login", UserController.login);
+router.get("/info", authentication, UserController.getInfo);
 router.get("/", authentication, UserController.getAll);
+router.get("/id/:id", authentication, UserController.getById);
 router.put(
   "/:UserId/changeRoleToSuperAdmin",
   authentication,

@@ -29,7 +29,7 @@ const UserController = {
         expiresIn: "48h",
       });
 
-      const url = "http://localhost:8080/users/confirm/" + emailToken;
+      const url = "http://localhost:5173/confirmed/" + emailToken;
       await transporter.sendMail({
         to: req.body.email,
 
@@ -50,8 +50,8 @@ const UserController = {
 
   async confirm(req, res) {
     try {
-      const token = req.params.email;
-      const payload = jwt.verify(token, jwt_secret);
+      const emailToken = req.params.email;
+      const payload = jwt.verify(emailToken, jwt_secret);
       await User.update(
         { confirmed: true },
         {
@@ -60,8 +60,14 @@ const UserController = {
           },
         }
       );
-
-      res.status(201).send("User confirmed succesfully!");
+      const user = await User.findOne({
+        where: {
+          email: payload.email,
+        },
+      });
+      const token = jwt.sign({ id: user.id }, jwt_secret);
+      await Token.create({ token, UserId: user.id });
+      res.status(201).send({ msg: "User confirmed succesfully!", token, user });
     } catch (error) {
       console.error(error);
     }
@@ -118,6 +124,65 @@ const UserController = {
       res.status(500).send({
         message: "Problem getting all users",
       });
+    }
+  },
+
+  async getById(req, res) {
+    const userId = req.params.id;
+
+    try {
+      const user = await User.findByPk(userId, {
+        include: [
+          {
+            model: Review,
+          },
+          {
+            model: Order,
+          },
+          {
+            model: Library,
+          },
+        ],
+      });
+
+      if (!user) {
+        return res.status(404).send({ message: "User not found" });
+      }
+
+      res.send(user);
+    } catch (err) {
+      console.error(err);
+      res
+        .status(500)
+        .send({ message: "An error occurred while fetching the user" });
+    }
+  },
+
+  async getInfo(req, res) {
+    try {
+      const user = await User.findByPk(req.user.id, {
+        include: [
+          {
+            model: Review,
+          },
+          {
+            model: Order,
+          },
+          {
+            model: Library,
+          },
+        ],
+      });
+
+      if (!user) {
+        return res.status(404).send({ message: "User not found" });
+      }
+      res.send(user);
+    } catch (err) {
+      console.error(err);
+      res
+        .status(500)
+        .send({ message: "An error occurred while fetching the user info" });
     }
   },
 
