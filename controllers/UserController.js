@@ -32,13 +32,13 @@ const UserController = {
       const url = "http://localhost:5173/confirmed/" + emailToken;
       await transporter.sendMail({
         to: req.body.email,
-
-        subject: "Please confirm your email",
-
-        html: `<h3> Welcome! You have to confirm your email address </h3>
-        
-        <a href="${url}"> Click here to confirm your email!</a>
-        
+        subject: "Welcome to Aether - Confirm Your Email",
+        html: `
+          <div style="background-color: #171a21; padding: 30px; border-radius: 12px; max-width: 500px; margin: auto; color: white; text-align: center; font-family: 'Arial', sans-serif;">
+            <h2 style="font-size: 24px; margin-bottom: 30px;">Welcome to Aether!</h2>
+            <p style="font-size: 18px; margin-bottom: 30px;">Thank you for signing up. </p><p>To complete your registration, please confirm your email address.</p>
+            <a href="${url}" style="text-decoration: none; color: #b268df; font-size: 18px; font-weight: bold; background-color: #171a21; padding: 15px 30px; border-radius: 6px; border: 2px solid #b268df; cursor: pointer; display: inline-block;">Click here to confirm your email</a>
+          </div>
         `,
       });
       res.status(201).send({ message: "User created successfully!", user });
