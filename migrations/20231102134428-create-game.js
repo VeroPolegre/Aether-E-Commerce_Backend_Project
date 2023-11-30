@@ -11,6 +11,7 @@ module.exports = {
       },
 
       title: Sequelize.STRING,
+      image_path: Sequelize.STRING,
       description: Sequelize.STRING,
       release_date: Sequelize.DATE,
       price: Sequelize.DECIMAL,
