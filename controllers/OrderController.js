@@ -3,42 +3,59 @@ const { Order, Game, OrdersGames, Library } = require("../models/index.js");
 const OrderController = {
   async create(req, res) {
     try {
-      const { GameId, quantity } = req.body;
-      if (!GameId || !quantity) {
-        return res
-          .status(400)
-          .json({ error: "Both GameId and quantity are required." });
+      const { games } = req.body; // Assuming games is an array of { GameId, quantity }
+
+      if (!games || games.length === 0) {
+        return res.status(400).json({ error: "Games array is required." });
       }
 
-      const selectedGame = await Game.findByPk(GameId);
-      if (!selectedGame) {
-        return res.status(404).json({ error: "Game not found." });
-      }
+      const orderDetails = await Promise.all(
+        games.map(async ({ GameId, quantity }) => {
+          const selectedGame = await Game.findByPk(GameId);
+          if (!selectedGame) {
+            return res
+              .status(404)
+              .json({ error: `Game with ID ${GameId} not found.` });
+          }
 
-      const totalPrice = selectedGame.price * quantity;
-      const order = {
-        GameId: selectedGame.id,
-        gameTitle: selectedGame.title,
-        date: new Date(),
+          return {
+            GameId: selectedGame.id,
+            gameTitle: selectedGame.title,
+            date: new Date(),
+            UserId: req.user.id,
+            quantity,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+          };
+        })
+      );
+
+      const createdOrder = await Order.create({
         UserId: req.user.id,
-        quantity,
-        total: totalPrice,
         createdAt: new Date(),
         updatedAt: new Date(),
-      };
-
-      const createdOrder = await Order.create(order);
-      await OrdersGames.create({
-        OrderId: createdOrder.id,
-        GameId: selectedGame.id,
       });
 
-      await Library.create({
-        GameId: selectedGame.id,
-        UserId: req.user.id,
-      });
+      await Promise.all(
+        orderDetails.map(async (orderDetail) => {
+          const createdOrderDetail = await OrdersGames.create({
+            OrderId: createdOrder.id,
+            GameId: orderDetail.GameId,
+            quantity: orderDetail.quantity, // Store the quantity in OrdersGames
+          });
 
-      res.status(201).json({ message: "Order created successfully!", order });
+          await Library.create({
+            GameId: orderDetail.GameId,
+            UserId: req.user.id,
+          });
+
+          return createdOrderDetail;
+        })
+      );
+
+      res
+        .status(201)
+        .json({ message: "Order created successfully!", order: createdOrder });
     } catch (err) {
       console.error(err);
       res.status(500).json({ error: "Error creating order.", err });
@@ -48,7 +65,12 @@ const OrderController = {
   async getAll(req, res) {
     try {
       const orders = await Order.findAll({
-        include: Game,
+        include: [
+          {
+            model: OrdersGames,
+            include: [Game],
+          },
+        ],
       });
       res.status(200).json({ orders });
     } catch (err) {
